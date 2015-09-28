@@ -6,10 +6,10 @@ package com.hp.inventory.audit.rest.service.core;
 import java.io.Serializable;
 
 /**
- * Product Domain model which represents a product
+ * Tablet Domain model which represents a tablet
  *
  * @author TCSCODER
  * @version 1.0
  */
-public class Product implements Serializable {
+public class Tablet implements Serializable {
 }

@@ -15,4 +15,25 @@ import javax.inject.Singleton;
 public class ApiConfiguration {
 
     public static final String NAMED_BINDING = "com.hp.product.inventory.rest.service.config";
+
+    /**
+     * Represents the default limit of number of entities to return in single API call
+     */
+    private int defaultLimit;
+
+    /**
+     * Gets the defaultLimit
+     * @return the defaultLimit
+     */
+    public int getDefaultLimit() {
+        return defaultLimit;
+    }
+
+    /**
+     * Sets the defaultLimit
+     * @param defaultLimit the defaultLimit value to set
+     */
+    public void setDefaultLimit(int defaultLimit) {
+        this.defaultLimit = defaultLimit;
+    }
 }

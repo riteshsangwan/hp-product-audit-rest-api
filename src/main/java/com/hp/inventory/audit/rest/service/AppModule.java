@@ -6,7 +6,11 @@ package com.hp.inventory.audit.rest.service;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.hp.inventory.audit.rest.service.config.ApiConfiguration;
+import com.hp.inventory.audit.rest.service.core.Desktop;
+import com.hp.inventory.audit.rest.service.core.Laptop;
+import com.hp.inventory.audit.rest.service.core.Printer;
 import com.hp.inventory.audit.rest.service.core.Product;
+import com.hp.inventory.audit.rest.service.core.Tablet;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -26,7 +30,7 @@ import javax.inject.Named;
  */
 public class AppModule extends AbstractModule {
 
-    private final HibernateBundle<Configuration> hibernateBundle = new HibernateBundle<Configuration>(Product.class) {
+    private final HibernateBundle<Configuration> hibernateBundle = new HibernateBundle<Configuration>(Product.class, Desktop.class, Laptop.class, Printer.class, Tablet.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(Configuration configuration) {
             return configuration.getDataSourceFactory();

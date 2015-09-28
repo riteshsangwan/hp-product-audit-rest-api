@@ -1,21 +1,22 @@
-tokenExpirationInMillis: 1800000
 database:
   # the name of your JDBC driver
-  driverClass: com.mysql.jdbc.Driver
+  driverClass: com.vertica.jdbc.Driver
 
   # the username
-  user: root
+  user: dbadmin
 
   # the password
   password: deflection
 
   # the JDBC URL
-  url: jdbc:mysql://localhost:3306/contactsapp
+  url: jdbc:vertica://10.0.0.13:5433/productinventory
 
   # any properties specific to your JDBC driver:
   properties:
     charSet: UTF-8
-    hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    hibernate.dialect: org.hibernate.dialect.PostgreSQL81Dialect
+    hibernate.show_sql: true
+    hibernate.format_sql: true
 
   # the maximum amount of time to wait on an empty pool before throwing an exception
   maxWaitForConnection: 1s
@@ -27,10 +28,9 @@ database:
   minSize: 8
 
   # the maximum number of connections to keep open
-  maxSize: 32
+  maxSize: 16
 
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
 api:
-  jwtAudience: audience
-  jwtSecret: averysecretthing
+  defaultLimit: 50
