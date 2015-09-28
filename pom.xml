@@ -4,18 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.assignment</groupId>
-    <artifactId>contacts-app</artifactId>
+    <groupId>com.hp</groupId>
+    <artifactId>inventory-audit-rest-service</artifactId>
     <version>1.0</version>
     <properties>
         <!-- use UTF-8 for everything -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <dropwizard.version>0.8.0</dropwizard.version>
+        <dropwizard.version>0.8.4</dropwizard.version>
+        <dropwizard-guice.version>0.8.3.0</dropwizard-guice.version>
         <junit.version>4.12</junit.version>
-        <java-jwt.version>2.1.0</java-jwt.version>
-        <jbcrypt.version>0.3m</jbcrypt.version>
-        <mysql-connector-java.version>5.1.35</mysql-connector-java.version>
+        <vertica-jdbc-connector.version>7.1.2-0</vertica-jdbc-connector.version>
         <commons-lang3.version>3.0</commons-lang3.version>
     </properties>
     <dependencies>
@@ -30,42 +29,28 @@
             <version>${dropwizard.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-migrations</artifactId>
-            <version>${dropwizard.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.hubspot.dropwizard</groupId>
             <artifactId>dropwizard-guice</artifactId>
-            <version>${dropwizard.version}</version>
+            <version>${dropwizard-guice.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>${java-jwt.version}</version>
-        </dependency>
+
         <!-- testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>${jbcrypt.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector-java.version}</version>
+            <groupId>com.vertica</groupId>
+            <artifactId>vertica-jdbc</artifactId>
+            <version>${vertica-jdbc-connector.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-
 
     </dependencies>
     <build>
@@ -76,8 +61,8 @@
                 <version>3.1</version>
                 <!-- compile for Java 1.8 -->
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -108,7 +93,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.assignments.contactsapp.Application</mainClass>
+                                    <mainClass>com.hp.inventory.audit.rest.service.Application</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

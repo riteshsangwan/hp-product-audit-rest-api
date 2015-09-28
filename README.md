@@ -1,2 +1,2 @@
-# contacts-api
-Contact application backend REST API
+# product-audit-rest-service
+HP product audit backend REST API
