@@ -24,7 +24,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * jersey resource class for tablets endpoint
+ * jersey resource class for '/desktops' endpoint
  * Only the application/json MIME type is supported.
  *
  * @author              TCSCODER
@@ -37,8 +37,8 @@ public class Desktops {
     private final DesktopService service;
 
     /**
-     * Default public constructor. Whenever an instance of this class is created, singleton instance of TabletService is injected by guice.
-     * @param   service                 TabletService singleton instance
+     * Default public constructor. Whenever an instance of this class is created, singleton instance of DesktopService is injected by guice.
+     * @param   service                 DesktopService singleton instance
      * @since   1.0
      */
     @Inject
@@ -61,7 +61,7 @@ public class Desktops {
             "secondDisplayCable", "secondGraphicsCard", "secondInternalStorage", "secondaryInternalPcieStorage", "secondaryOpticalDrive", "secondaryProcessor", "security",
             "securityEncryption", "sixthInternalStorage", "seventhInternalStorage", "softwareBundles", "speakers", "stand", "systemRecoverySolutions", "tvTuner",
             "technical", "technicalAV", "thirdGraphicsCard", "thirdInternalStorage", "webcam", "wireless"}, sortColumns = {"currentPrice", "productName", "rating"})
-    public ApiResponse getTablets(@SearchCriteriaParam SearchCriteria criteria) throws ApiException {
+    public ApiResponse getDesktops(@SearchCriteriaParam SearchCriteria criteria) throws ApiException {
         ServiceResult<Desktop> result = service.getDesktops(criteria);
         return ApiResponse.buildWithPayload(new Payload<Desktop>().addObjectsToList(result.getResults()).setCursor(result.getCursor())).setStatus(Response.Status.OK);
     }
@@ -70,7 +70,7 @@ public class Desktops {
     @Timed
     @ExceptionMetered
     @Path("/{productNumber}")
-    public ApiResponse getTablet(@PathParam("productNumber") String productNumber) throws ApiException {
+    public ApiResponse getDesktop(@PathParam("productNumber") String productNumber) throws ApiException {
         ServiceResult<Desktop> result = service.getDesktop(productNumber);
         return ApiResponse.buildWithPayload(new Payload<Desktop>().addObject(result.getResult())).setStatus(Response.Status.OK);
     }
