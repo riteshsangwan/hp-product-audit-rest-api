@@ -29,14 +29,27 @@ import java.util.List;
  * @version             1.0
  */
 public class TabletDAO extends AbstractDAO<Tablet> {
+
+    /**
+     * Represents the hibernate session factory
+     */
     private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor, whenever an instance of this class is created sessionFactory is injected by guice
+     * @param sessionFactory the hibernate session factory
+     */
     @Inject
     public TabletDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Search the database based on the given search criteria
+     * @param criteria the search criteria
+     * @return Generic ServiceResult with embedded search results and search result cursor
+     */
     public ServiceResult<Tablet> search(SearchCriteria criteria) {
         Session session = this.sessionFactory.openSession();
         Criteria hibernateCriteria = session.createCriteria(Tablet.class);
@@ -84,13 +97,13 @@ public class TabletDAO extends AbstractDAO<Tablet> {
         if(criteria.getImages() != null && criteria.getImages()) {
             for(Tablet tablet: result) {
                 // typical lazy initialize
-                tablet.getImages().size();
+                tablet.getImages();
             }
         }
         if(criteria.getRa() != null && criteria.getRa()) {
             for(Tablet tablet: result) {
                 // typical lazy initialize
-                tablet.getTopAccessories().size();
+                tablet.getTopAccessories();
             }
         }
         long total = (long) session.createCriteria(Tablet.class).setProjection(Projections.rowCount()).uniqueResult();
@@ -104,8 +117,15 @@ public class TabletDAO extends AbstractDAO<Tablet> {
         return new ServiceResult<Tablet>(result, cursor);
     }
 
+    /**
+     * Find an entity by id
+     * @param id the id
+     * @return the matched entity or null if there is no such entity
+     */
     public Tablet findById(String id) {
         Session session = this.sessionFactory.openSession();
-        return (Tablet) session.get(Tablet.class, id);
+        Tablet tablet = (Tablet) session.get(Tablet.class, id);
+        session.close();
+        return tablet;
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Represents the search criteria for /printers API's
  *
@@ -29,6 +31,8 @@ public class PrinterSearchCriteria extends SearchCriteria {
      * @param type the value to set to type
      */
     public void setType(String type) {
-        this.type = type;
+        if(StringUtils.isNotBlank(type)) {
+            this.type = type;
+        }
     }
 }

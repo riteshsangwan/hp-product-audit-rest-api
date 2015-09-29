@@ -5,10 +5,15 @@ package com.hp.inventory.audit.rest.service.factories;
 
 import com.hp.inventory.audit.rest.service.core.PrinterSearchCriteria;
 import com.hp.inventory.audit.rest.service.exceptions.ApiException;
+import com.hp.inventory.audit.rest.service.util.Utilities;
 import org.glassfish.jersey.server.internal.inject.AbstractContainerRequestValueFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Factory implementation for PrinterSearchCriteria
@@ -21,10 +26,27 @@ public class PrinterSearchCriteriaValueFactory extends AbstractContainerRequestV
 
     @Inject
     private HttpServletRequest request;
+    /**
+     * Inject Jersey context param UriInfo
+     */
+    @Inject
+    @Context
+    private UriInfo info;
+    /**
+     * Get an handle of utilities class to parse query strings
+     */
+    @Inject
+    private Utilities utilities;
 
     @Override
     public PrinterSearchCriteria provide() throws ApiException {
-        PrinterSearchCriteria criteria = new PrinterSearchCriteria();
-        return criteria;
+        MultivaluedMap<String, String> queryParams = info.getQueryParameters();
+        try {
+            return utilities.parsePrinterSearchCriteria(queryParams);
+        } catch (InvocationTargetException ex) {
+            throw new ApiException("Error parsing printer search criteria", ex);
+        } catch (IllegalAccessException ex) {
+            throw new ApiException("Error parsing printer search criteria", ex);
+        }
     }
 }

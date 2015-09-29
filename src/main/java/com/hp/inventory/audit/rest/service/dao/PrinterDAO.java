@@ -31,14 +31,27 @@ import java.util.List;
  * @version 1.0
  */
 public class PrinterDAO extends AbstractDAO<Printer> {
+
+    /**
+     * Represents the hibernate session factory
+     */
     private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor, whenever an instance of this class is created sessionFactory is injected by guice
+     * @param sessionFactory the hibernate session factory
+     */
     @Inject
     public PrinterDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Search the database based on the given search criteria
+     * @param criteria the search criteria
+     * @return Generic ServiceResult with embedded search results and search result cursor
+     */
     public ServiceResult<Printer> search(PrinterSearchCriteria criteria) {
         Session session = this.sessionFactory.openSession();
         Criteria hibernateCriteria = session.createCriteria(Printer.class);
@@ -109,8 +122,15 @@ public class PrinterDAO extends AbstractDAO<Printer> {
         return new ServiceResult<Printer>(result, cursor);
     }
 
+    /**
+     * Find an entity by id
+     * @param id the id
+     * @return the matched entity or null if there is no such entity
+     */
     public Printer findById(String id) {
         Session session = this.sessionFactory.openSession();
-        return (Printer) session.get(Printer.class, id);
+        Printer printer = (Printer) session.get(Printer.class, id);
+        session.close();
+        return printer;
     }
 }

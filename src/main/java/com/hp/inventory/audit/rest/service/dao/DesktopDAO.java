@@ -29,14 +29,26 @@ import java.util.List;
  * @version 1.0
  */
 public class DesktopDAO extends AbstractDAO<Desktop> {
+    /**
+     * Represents the hibernate session factory
+     */
     private final SessionFactory sessionFactory;
 
+    /**
+     * Constructor, whenever an instance of this class is created sessionFactory is injected by guice
+     * @param sessionFactory the hibernate session factory
+     */
     @Inject
     public DesktopDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Search the database based on the given search criteria
+     * @param criteria the search criteria
+     * @return Generic ServiceResult with embedded search results and search result cursor
+     */
     public ServiceResult<Desktop> search(SearchCriteria criteria) {
         Session session = this.sessionFactory.openSession();
         Criteria hibernateCriteria = session.createCriteria(Desktop.class);
@@ -104,8 +116,15 @@ public class DesktopDAO extends AbstractDAO<Desktop> {
         return new ServiceResult<Desktop>(result, cursor);
     }
 
+    /**
+     * Find an entity by id
+     * @param id the id
+     * @return the matched entity or null if there is no such entity
+     */
     public Desktop findById(String id) {
         Session session = this.sessionFactory.openSession();
-        return (Desktop) session.get(Desktop.class, id);
+        Desktop desktop = (Desktop) session.get(Desktop.class, id);
+        session.close();
+        return desktop;
     }
 }

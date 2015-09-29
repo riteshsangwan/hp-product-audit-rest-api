@@ -9,7 +9,6 @@ import com.hp.inventory.audit.rest.service.core.SearchCriteria;
 import com.hp.inventory.audit.rest.service.core.ServiceResult;
 import com.hp.inventory.audit.rest.service.core.Tablet;
 import com.hp.inventory.audit.rest.service.dao.TabletDAO;
-import com.hp.inventory.audit.rest.service.exceptions.ApiException;
 import com.hp.inventory.audit.rest.service.exceptions.EntityNotFoundException;
 import io.dropwizard.validation.Validated;
 
@@ -37,7 +36,12 @@ public class TabletService {
         this.apiConfiguration = apiConfiguration;
     }
 
-    public ServiceResult<Tablet> getTablets(SearchCriteria criteria) throws ApiException {
+    /**
+     * Search the tablets based on the search criteria
+     * @param criteria the search criteria
+     * @return Generic ServiceResult with embedded search results and search result cursor
+     */
+    public ServiceResult<Tablet> getTablets(SearchCriteria criteria) {
         // set default limit
         if(criteria.getLimit() == null) {
             criteria.setLimit(apiConfiguration.getDefaultLimit());
@@ -49,11 +53,10 @@ public class TabletService {
      * Return a tablet based on the given product number
      *
      * @param productNumber the productNumber
-     * @return Tablet instnace based on the given productNumber
-     * @throws ApiException if any exception occurs
+     * @return Tablet instance based on the given productNumber
      * @throws EntityNotFoundException if the tablet is not found with given product number
      */
-    public ServiceResult<Tablet> getTablet(String productNumber) throws ApiException, EntityNotFoundException {
+    public ServiceResult<Tablet> getTablet(String productNumber) throws EntityNotFoundException {
         Tablet tablet = tabletDAO.findById(productNumber);
         if(tablet == null) {
             throw new EntityNotFoundException("Tablet not found with the given product number");
