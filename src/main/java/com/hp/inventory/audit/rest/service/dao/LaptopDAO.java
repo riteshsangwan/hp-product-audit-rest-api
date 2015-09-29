@@ -4,7 +4,7 @@
 package com.hp.inventory.audit.rest.service.dao;
 
 import com.google.inject.Inject;
-import com.hp.inventory.audit.rest.service.core.Desktop;
+import com.hp.inventory.audit.rest.service.core.Laptop;
 import com.hp.inventory.audit.rest.service.core.SearchCriteria;
 import com.hp.inventory.audit.rest.service.core.SearchResultCursor;
 import com.hp.inventory.audit.rest.service.core.ServiceResult;
@@ -23,23 +23,23 @@ import org.hibernate.transform.Transformers;
 import java.util.List;
 
 /**
- * DAO implementation for Desktop table
+ * DAO implementation for Laptop table
  *
- * @author TCSCODER
- * @version 1.0
+ * @author              TCSCODER
+ * @version             1.0
  */
-public class DesktopDAO extends AbstractDAO<Desktop> {
+public class LaptopDAO extends AbstractDAO<Laptop> {
     private final SessionFactory sessionFactory;
 
     @Inject
-    public DesktopDAO(SessionFactory sessionFactory) {
+    public LaptopDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
-    public ServiceResult<Desktop> search(SearchCriteria criteria) {
+    public ServiceResult<Laptop> search(SearchCriteria criteria) {
         Session session = this.sessionFactory.openSession();
-        Criteria hibernateCriteria = session.createCriteria(Desktop.class);
+        Criteria hibernateCriteria = session.createCriteria(Laptop.class);
         if(criteria.getMinCurrentPrice() != null) {
             hibernateCriteria = hibernateCriteria.add(Restrictions.ge("currentPrice", criteria.getMinCurrentPrice()));
         }
@@ -62,7 +62,7 @@ public class DesktopDAO extends AbstractDAO<Desktop> {
                 projectionList = projectionList.add(Projections.property(field), field);
             }
             hibernateCriteria = hibernateCriteria.setProjection(projectionList);
-            hibernateCriteria = hibernateCriteria.setResultTransformer(Transformers.aliasToBean(Desktop.class));
+            hibernateCriteria = hibernateCriteria.setResultTransformer(Transformers.aliasToBean(Laptop.class));
         }
         // add sort order
         if(criteria.getSort() != null && !criteria.getSort().isEmpty()) {
@@ -79,21 +79,21 @@ public class DesktopDAO extends AbstractDAO<Desktop> {
         hibernateCriteria.setFirstResult(offset);
         hibernateCriteria = hibernateCriteria.setMaxResults(criteria.getLimit());
 
-        List<Desktop> result = hibernateCriteria.list();
+        List<Laptop> result = hibernateCriteria.list();
         // lazy load referenced entities
         if(criteria.getImages() != null && criteria.getImages()) {
-            for(Desktop desktop: result) {
+            for(Laptop laptop: result) {
                 // typical lazy initialize
-                desktop.getImages().size();
+                laptop.getImages().size();
             }
         }
         if(criteria.getRa() != null && criteria.getRa()) {
-            for(Desktop desktop: result) {
+            for(Laptop laptop: result) {
                 // typical lazy initialize
-                desktop.getTopAccessories().size();
+                laptop.getTopAccessories().size();
             }
         }
-        long total = (long) session.createCriteria(Desktop.class).setProjection(Projections.rowCount()).uniqueResult();
+        long total = (long) session.createCriteria(Laptop.class).setProjection(Projections.rowCount()).uniqueResult();
         long totalPages = total/criteria.getLimit() + 1;
         SearchResultCursor cursor = new SearchResultCursor();
         cursor.setLimit(criteria.getLimit());
@@ -101,11 +101,11 @@ public class DesktopDAO extends AbstractDAO<Desktop> {
         cursor.setTotalCount(total);
         cursor.setTotalPages(totalPages);
         session.close();
-        return new ServiceResult<Desktop>(result, cursor);
+        return new ServiceResult<Laptop>(result, cursor);
     }
 
-    public Desktop findById(String id) {
+    public Laptop findById(String id) {
         Session session = this.sessionFactory.openSession();
-        return (Desktop) session.get(Desktop.class, id);
+        return (Laptop) session.get(Laptop.class, id);
     }
 }

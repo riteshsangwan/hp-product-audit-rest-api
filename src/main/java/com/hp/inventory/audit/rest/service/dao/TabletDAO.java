@@ -23,7 +23,7 @@ import org.hibernate.transform.Transformers;
 import java.util.List;
 
 /**
- * DAO implementation for tablets table
+ * DAO implementation for Tablet table
  *
  * @author              TCSCODER
  * @version             1.0

@@ -9,7 +9,7 @@ import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 /**
- * DAO implementation for products table
+ * DAO implementation for Product table
  *
  * @author              TCSCODER
  * @version             1.0
