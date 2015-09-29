@@ -19,13 +19,13 @@ public class ApiConfiguration {
     /**
      * Represents the default limit of number of entities to return in single API call
      */
-    private int defaultLimit;
+    private String defaultLimit;
 
     /**
      * Gets the defaultLimit
      * @return the defaultLimit
      */
-    public int getDefaultLimit() {
+    public String getDefaultLimit() {
         return defaultLimit;
     }
 
@@ -33,7 +33,7 @@ public class ApiConfiguration {
      * Sets the defaultLimit
      * @param defaultLimit the defaultLimit value to set
      */
-    public void setDefaultLimit(int defaultLimit) {
+    public void setDefaultLimit(String defaultLimit) {
         this.defaultLimit = defaultLimit;
     }
 }

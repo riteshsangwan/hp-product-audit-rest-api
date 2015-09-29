@@ -20,18 +20,33 @@ public class Payload<T> {
     /**
      * Represents a list payload
      */
-    private List<T> data;
+    private List<T> items;
     /**
      * Represents a single payload data
      */
     private T single;
 
     /**
+     * Represents the search result cursor
+     */
+    private SearchResultCursor cursor;
+
+    /**
+     * Sets the search result cursor
+     * @param cursor the search result cursor to set
+     * @return this for chanining
+     */
+    public Payload<T> setCursor(SearchResultCursor cursor) {
+        this.cursor = cursor;
+        return this;
+    }
+
+    /**
      * Gets the data
      * @return the data
      */
-    public List<T> getData() {
-        return this.data;
+    public List<T> getItems() {
+        return this.items;
     }
 
     /**
@@ -58,10 +73,10 @@ public class Payload<T> {
      * @return this to support chaining
      */
     public Payload<T> addObjectToList(T object) {
-        if(this.getData() == null) {
-            this.data = new ArrayList<T>();
+        if(this.getItems() == null) {
+            this.items = new ArrayList<T>();
         }
-        this.getData().add(object);
+        this.getItems().add(object);
         return this;
     }
 
@@ -71,10 +86,18 @@ public class Payload<T> {
      * @return this to support chaining
      */
     public Payload<T> addObjectsToList(List<T> objects) {
-        if(this.getData() == null) {
-            this.data = new ArrayList<T>();
+        if(this.getItems() == null) {
+            this.items = new ArrayList<T>();
         }
-        this.getData().addAll(objects);
+        this.getItems().addAll(objects);
         return this;
+    }
+
+    /**
+     * Gets the cursor
+     * @return the cursor
+     */
+    public SearchResultCursor getCursor() {
+        return this.cursor;
     }
 }

@@ -20,6 +20,9 @@ import java.io.IOException;
  */
 @Provider
 public class ResponseFilter implements ContainerResponseFilter {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
         Object entity = containerResponseContext.getEntity();

@@ -3,6 +3,9 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,15 +52,21 @@ public class SearchCriteria extends PartialResponse {
      * @return the minCurrentPrice
      */
     public Double getMinCurrentPrice() {
-        return minCurrentPrice;
+        return this.minCurrentPrice;
     }
 
     /**
      * Sets the minCurrentPrice
      * @param minCurrentPrice the value to set to minCurrentPrice
      */
-    public void setMinCurrentPrice(Double minCurrentPrice) {
-        this.minCurrentPrice = minCurrentPrice;
+    public void setMinCurrentPrice(String minCurrentPrice) {
+        if(StringUtils.isNotBlank(minCurrentPrice)) {
+            try {
+                this.minCurrentPrice = Double.parseDouble(minCurrentPrice);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException("minCurrentPrice should be a valid double value", nfe);
+            }
+        }
     }
 
     /**
@@ -65,15 +74,21 @@ public class SearchCriteria extends PartialResponse {
      * @return the maxCurrentPrice
      */
     public Double getMaxCurrentPrice() {
-        return maxCurrentPrice;
+        return this.maxCurrentPrice;
     }
 
     /**
      * Sets the maxCurrentPrice
      * @param maxCurrentPrice the value to set to maxCurrentPrice
      */
-    public void setMaxCurrentPrice(Double maxCurrentPrice) {
-        this.maxCurrentPrice = maxCurrentPrice;
+    public void setMaxCurrentPrice(String maxCurrentPrice) {
+        if(StringUtils.isNotBlank(maxCurrentPrice)) {
+            try {
+                this.maxCurrentPrice = Double.parseDouble(maxCurrentPrice);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException("maxCurrentPrice should be a valid double value", nfe);
+            }
+        }
     }
 
     /**
@@ -81,15 +96,25 @@ public class SearchCriteria extends PartialResponse {
      * @return the rating
      */
     public List<Integer> getRating() {
-        return rating;
+        return this.rating;
     }
 
     /**
      * Sets the rating
      * @param rating the value to set to rating
      */
-    public void setRating(List<Integer> rating) {
-        this.rating = rating;
+    public void setRating(String rating) {
+        if(StringUtils.isNotBlank(rating)) {
+            String[] parts = rating.split(",");
+            this.rating = new ArrayList<Integer>();
+            for(String part: parts) {
+                try {
+                    this.rating.add(Integer.parseInt(part));
+                } catch(NumberFormatException nfe) {
+                    throw new IllegalArgumentException(part + " is not a valid rating value. Rating can only be integers", nfe);
+                }
+            }
+        }
     }
 
     /**
@@ -97,7 +122,7 @@ public class SearchCriteria extends PartialResponse {
      * @return the minParseDate
      */
     public Date getMinParseDate() {
-        return minParseDate;
+        return this.minParseDate;
     }
 
     /**
@@ -106,11 +131,13 @@ public class SearchCriteria extends PartialResponse {
      * @throws java.lang.IllegalArgumentException if the parameter is not a valid representation of long
      */
     public void setMinParseDate(String minParseDate) {
-        try {
-            long millis = Long.parseLong(minParseDate);
-            this.minParseDate = new Date(millis);
-        } catch(NumberFormatException nfe) {
-            throw new IllegalArgumentException("minParseDate should be a valid date", nfe);
+        if(StringUtils.isNotBlank(minParseDate)) {
+            try {
+                long millis = Long.parseLong(minParseDate);
+                this.minParseDate = new Date(millis);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException("minParseDate should be a valid date", nfe);
+            }
         }
     }
 
@@ -119,7 +146,7 @@ public class SearchCriteria extends PartialResponse {
      * @return the maxParseDate
      */
     public Date getMaxParseDate() {
-        return maxParseDate;
+        return this.maxParseDate;
     }
 
     /**
@@ -128,11 +155,13 @@ public class SearchCriteria extends PartialResponse {
      * @throws java.lang.IllegalArgumentException if the parameter is not a valid representation of long
      */
     public void setMaxParseDate(String maxParseDate) {
-        try {
-            long millis = Long.parseLong(maxParseDate);
-            this.minParseDate = new Date(millis);
-        } catch(NumberFormatException nfe) {
-            throw new IllegalArgumentException("maxParseDate should be a valid date", nfe);
+        if(StringUtils.isNotBlank(maxParseDate)) {
+            try {
+                long millis = Long.parseLong(maxParseDate);
+                this.maxParseDate = new Date(millis);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException("maxParseDate should be a valid date", nfe);
+            }
         }
     }
 
@@ -148,8 +177,14 @@ public class SearchCriteria extends PartialResponse {
      * Sets the images
      * @param images the value to set to images
      */
-    public void setImages(Boolean images) {
-        this.images = images;
+    public void setImages(String images) {
+        if(StringUtils.isNotBlank(images)) {
+            try {
+                this.images = Boolean.parseBoolean(images);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException(images + "is not a valid images value. Valid values are 'true' or 'false'", nfe);
+            }
+        }
     }
 
     /**
@@ -164,7 +199,13 @@ public class SearchCriteria extends PartialResponse {
      * Sets the minCurrentPrice
      * @param ra the value to set to ra
      */
-    public void setRa(Boolean ra) {
-        this.ra = ra;
+    public void setRa(String ra) {
+        if(StringUtils.isNotBlank(ra)) {
+            try {
+                this.ra = Boolean.parseBoolean(ra);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException(ra + "is not a valid images value. Valid values are 'true' or 'false'", nfe);
+            }
+        }
     }
 }

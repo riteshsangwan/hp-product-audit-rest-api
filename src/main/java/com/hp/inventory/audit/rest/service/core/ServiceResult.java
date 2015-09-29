@@ -24,13 +24,18 @@ public class ServiceResult<M extends Serializable> {
      * This will be returned by get operation
      */
     private M result;
+    /**
+     * Represents the search result cursor
+     */
+    private SearchResultCursor cursor;
 
     /**
      * Instantiate with a list result object
      * @param results the result objects to instantiate with
      */
-    public ServiceResult(List<M> results) {
+    public ServiceResult(List<M> results, SearchResultCursor cursor) {
         this.results = results;
+        this.cursor = cursor;
     }
 
     /**
@@ -55,5 +60,13 @@ public class ServiceResult<M extends Serializable> {
      */
     public M getResult() {
         return this.result;
+    }
+
+    /**
+     * Gets the cursor
+     * @return the cursor
+     */
+    public SearchResultCursor getCursor() {
+        return this.cursor;
     }
 }

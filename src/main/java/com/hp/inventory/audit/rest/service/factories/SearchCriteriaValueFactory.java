@@ -5,10 +5,14 @@ package com.hp.inventory.audit.rest.service.factories;
 
 import com.hp.inventory.audit.rest.service.core.SearchCriteria;
 import com.hp.inventory.audit.rest.service.exceptions.ApiException;
+import com.hp.inventory.audit.rest.service.util.Utilities;
 import org.glassfish.jersey.server.internal.inject.AbstractContainerRequestValueFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * Factory implementation for SearchCriteria
@@ -19,12 +23,27 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchCriteriaValueFactory extends AbstractContainerRequestValueFactory<SearchCriteria> {
 
+    /**
+     * Inject the http servlet request
+     */
     @Inject
     private HttpServletRequest request;
+    /**
+     * Inject Jersey context param UriInfo
+     */
+    @Inject
+    @Context
+    private UriInfo info;
+
+    /**
+     * Get an handle of utilities class to parse query strings
+     */
+    @Inject
+    private Utilities utilities;
 
     @Override
     public SearchCriteria provide() throws ApiException {
-        SearchCriteria criteria = new SearchCriteria();
-        return criteria;
+        MultivaluedMap<String, String> queryParams = info.getQueryParameters();
+        return utilities.parseSearchCriteria(queryParams);
     }
 }

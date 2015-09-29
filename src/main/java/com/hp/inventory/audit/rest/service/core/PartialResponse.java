@@ -3,6 +3,9 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,7 +33,9 @@ public class PartialResponse extends Pagination {
      * Sets the fields
      * @param fields the value to set to fields
      */
-    public void setFields(List<String> fields) {
-        this.fields = fields;
+    public void setFields(String fields) {
+        if(StringUtils.isNotBlank(fields)) {
+            this.fields = Arrays.asList(fields.split(","));
+        }
     }
 }

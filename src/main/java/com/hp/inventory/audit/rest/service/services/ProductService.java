@@ -29,7 +29,6 @@ public class ProductService {
      * @param   productDAO                              DAO implementation for this service
      * @param   configuration                           Application configuration instance
      * @param   apiConfiguration                        commons api configuration instance
-     * @since   1.0
      */
     @Inject
     public ProductService(ProductDAO productDAO, @Validated Configuration configuration, @Validated @Named(ApiConfiguration.NAMED_BINDING) ApiConfiguration apiConfiguration) {

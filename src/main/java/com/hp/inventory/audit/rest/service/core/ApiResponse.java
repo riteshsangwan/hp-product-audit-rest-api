@@ -3,6 +3,8 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  * @author              TCSCODER
  * @version             1.0
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse {
     /**
      * Base Inner class to represent http headers
@@ -92,10 +95,10 @@ public class ApiResponse {
      * @return the payload
      */
     public Object getPayload() {
-        if(this.payload.getData() != null) {
-            return this.payload.getData();
+        if(this.payload != null && this.payload.getItems() != null) {
+            return this.payload;
         }
-        return this.payload.getSingle();
+        return this.payload !=null ? this.payload.getSingle() : null;
     }
 
     /**

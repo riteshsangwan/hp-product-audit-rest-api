@@ -9,8 +9,18 @@ package com.hp.inventory.audit.rest.service.exceptions;
  * @author TCSCODER
  * @version 1.0
  */
-public class EntityNotFoundException extends Exception {
+public class EntityNotFoundException extends ApiException {
 
+    /**
+     * {@inheritDoc}
+     */
+    public EntityNotFoundException(String message) {
+        super(message);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public EntityNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }

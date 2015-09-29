@@ -3,6 +3,8 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * API's Search Criteria's which support pagination should extend this class
  *
@@ -32,8 +34,14 @@ public class Pagination extends Sorting {
      * Sets the limit
      * @param limit the value to set to limit
      */
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setLimit(String limit) {
+        if(StringUtils.isNotBlank(limit)) {
+            try {
+                this.limit = Integer.parseInt(limit);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException(limit + " value is invalid. Limit can only be an integer value");
+            }
+        }
     }
 
     /**
@@ -48,7 +56,13 @@ public class Pagination extends Sorting {
      * Sets the offset
      * @param offset the value to set to offset
      */
-    public void setOffset(Integer offset) {
-        this.offset = offset;
+    public void setOffset(String offset) {
+        if(StringUtils.isNotBlank(offset)) {
+            try {
+                this.offset = Integer.parseInt(offset);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException(offset + " value is invalid. Offset can only be an integer value");
+            }
+        }
     }
 }

@@ -3,6 +3,9 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +34,16 @@ public class Sorting {
      * Sets the sort
      * @param sort the value to set to sort
      */
-    public void setSort(List<SortCriteria> sort) {
-        this.sort = sort;
+    public void setSort(String sort) {
+        if(StringUtils.isNotBlank(sort)) {
+            this.sort = new ArrayList<SortCriteria>();
+            String[] parts = sort.split(",");
+            for(String part: parts) {
+                SortCriteria criteria = new SortCriteria();
+                criteria.setOrder(Character.toString(part.charAt(0)));
+                criteria.setKey(part.substring(1));
+                this.sort.add(criteria);
+            }
+        }
     }
 }

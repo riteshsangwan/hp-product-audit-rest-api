@@ -3,6 +3,8 @@
  */
 package com.hp.inventory.audit.rest.service.core;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Represents a sort criteria
  * A sort criteria will be a key and a sort order
@@ -48,7 +50,13 @@ public class SortCriteria {
      * Sets the order
      * @param order the value to set to order
      */
-    public void setOrder(SortOrder order) {
-        this.order = order;
+    public void setOrder(String order) {
+        if(StringUtils.isNotBlank(order)) {
+            if(order.equals("+")) {
+                this.order = SortOrder.ASCENDING;
+            } else if(order.equals("-")) {
+                this.order = SortOrder.DESCENDING;
+            }
+        }
     }
 }
