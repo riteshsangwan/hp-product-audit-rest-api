@@ -7,7 +7,6 @@ import com.google.inject.Singleton;
 import com.hp.inventory.audit.rest.service.core.PrinterSearchCriteria;
 import com.hp.inventory.audit.rest.service.core.ProductSearchCriteria;
 import com.hp.inventory.audit.rest.service.core.SearchCriteria;
-import org.apache.commons.beanutils.BeanUtils;
 
 import javax.ws.rs.core.MultivaluedMap;
 import java.lang.reflect.InvocationTargetException;
@@ -26,19 +25,15 @@ public final class Utilities {
      * Map a map of query params into an instance of SearchCriteria
      *
      * @param queryParams
-     * @param isProduct flag to indicate that the parsing should be done for products endpoint
-     *                  for products endpoint minParseDate and maxParseDate is not available
      * @return an instance of SearchCriteria
      */
-    public SearchCriteria parseSearchCriteria(MultivaluedMap<String, String> queryParams, boolean isProduct) {
+    public SearchCriteria parseSearchCriteria(MultivaluedMap<String, String> queryParams) {
         SearchCriteria criteria = new SearchCriteria();
         criteria.setMaxCurrentPrice(queryParams.getFirst("maxCurrentPrice"));
         criteria.setMinCurrentPrice(queryParams.getFirst("minCurrentPrice"));
         criteria.setRating(queryParams.getFirst("rating"));
-        if(!isProduct) {
-            criteria.setMinParseDate(queryParams.getFirst("minParseDate"));
-            criteria.setMaxParseDate(queryParams.getFirst("maxParseDate"));
-        }
+        criteria.setMinParseDate(queryParams.getFirst("minParseDate"));
+        criteria.setMaxParseDate(queryParams.getFirst("maxParseDate"));
         criteria.setImages(queryParams.getFirst("images"));
         criteria.setRa(queryParams.getFirst("ra"));
         criteria.setFields(queryParams.getFirst("fields"));
@@ -55,11 +50,20 @@ public final class Utilities {
      * @return an instance of PrinterSearchCriteria
      */
     public PrinterSearchCriteria parsePrinterSearchCriteria(MultivaluedMap<String, String> queryParams) throws InvocationTargetException, IllegalAccessException {
-        SearchCriteria searchCriteria = this.parseSearchCriteria(queryParams, false);
-        PrinterSearchCriteria printerSearchCriteria = new PrinterSearchCriteria();
-        BeanUtils.copyProperties(printerSearchCriteria, searchCriteria);
-        printerSearchCriteria.setType(queryParams.getFirst("type"));
-        return printerSearchCriteria;
+        PrinterSearchCriteria criteria = new PrinterSearchCriteria();
+        criteria.setMaxCurrentPrice(queryParams.getFirst("maxCurrentPrice"));
+        criteria.setMinCurrentPrice(queryParams.getFirst("minCurrentPrice"));
+        criteria.setRating(queryParams.getFirst("rating"));
+        criteria.setMinParseDate(queryParams.getFirst("minParseDate"));
+        criteria.setMaxParseDate(queryParams.getFirst("maxParseDate"));
+        criteria.setImages(queryParams.getFirst("images"));
+        criteria.setRa(queryParams.getFirst("ra"));
+        criteria.setFields(queryParams.getFirst("fields"));
+        criteria.setLimit(queryParams.getFirst("limit"));
+        criteria.setOffset(queryParams.getFirst("offset"));
+        criteria.setSort(queryParams.getFirst("sort"));
+        criteria.setType(queryParams.getFirst("type"));
+        return criteria;
     }
 
     /**
@@ -69,13 +73,21 @@ public final class Utilities {
      * @return an instance of ProductSearchCriteria
      */
     public ProductSearchCriteria parseProductSearchCriteria(MultivaluedMap<String, String> queryParams) throws InvocationTargetException, IllegalAccessException {
-        SearchCriteria searchCriteria = this.parseSearchCriteria(queryParams, true);
         ProductSearchCriteria criteria = new ProductSearchCriteria();
-        BeanUtils.copyProperties(criteria, searchCriteria);
+        criteria.setMaxCurrentPrice(queryParams.getFirst("maxCurrentPrice"));
+        criteria.setMinCurrentPrice(queryParams.getFirst("minCurrentPrice"));
+        criteria.setRating(queryParams.getFirst("rating"));
+        criteria.setImages(queryParams.getFirst("images"));
+        criteria.setRa(queryParams.getFirst("ra"));
+        criteria.setFields(queryParams.getFirst("fields"));
+        criteria.setLimit(queryParams.getFirst("limit"));
+        criteria.setOffset(queryParams.getFirst("offset"));
+        criteria.setSort(queryParams.getFirst("sort"));
+
         criteria.setProductType(queryParams.getFirst("productType"));
 
-        criteria.setMinAuditTimestamp(queryParams.getFirst("minAuditTimestamp"));
-        criteria.setMaxAuditTimestamp(queryParams.getFirst("maxAuditTimestamp"));
+        criteria.setMinAuditTimeStamp(queryParams.getFirst("minAuditTimeStamp"));
+        criteria.setMaxAuditTimeStamp(queryParams.getFirst("maxAuditTimeStamp"));
 
         criteria.setMinDateAdded(queryParams.getFirst("minDateAdded"));
         criteria.setMaxDateAdded(queryParams.getFirst("maxDateAdded"));

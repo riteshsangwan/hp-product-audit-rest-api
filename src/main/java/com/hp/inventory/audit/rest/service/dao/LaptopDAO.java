@@ -95,24 +95,26 @@ public class LaptopDAO extends AbstractDAO<Laptop> {
         List<Laptop> result = hibernateCriteria.list();
         // lazy load referenced entities
         if(criteria.getImages() != null && criteria.getImages()) {
-            for(Laptop laptop: result) {
-                // typical lazy initialize
-                laptop.getImages().size();
-            }
+            result.forEach((laptop) -> { laptop.getImages(); laptop.getImages().size(); });
         }
         if(criteria.getRa() != null && criteria.getRa()) {
-            for(Laptop laptop: result) {
-                // typical lazy initialize
-                laptop.getTopAccessories().size();
-            }
+            result.forEach((laptop) -> { laptop.getTopAccessories(); laptop.getTopAccessories().size(); });
         }
         long total = (long) session.createCriteria(Laptop.class).setProjection(Projections.rowCount()).uniqueResult();
-        long totalPages = total/criteria.getLimit() + 1;
+
         SearchResultCursor cursor = new SearchResultCursor();
-        cursor.setLimit(criteria.getLimit());
+        long totalPages = 0;
+        // negative limit is interpreted as no limit
+        if(criteria.getLimit() < 0) {
+            totalPages = 1;
+        } else {
+            cursor.setLimit(criteria.getLimit());
+            totalPages = (long) Math.ceil((double) total / (double) criteria.getLimit());
+        }
         cursor.setOffset(offset);
         cursor.setTotalCount(total);
         cursor.setTotalPages(totalPages);
+
         session.close();
         return new ServiceResult<Laptop>(result, cursor);
     }

@@ -94,21 +94,23 @@ public class DesktopDAO extends AbstractDAO<Desktop> {
         List<Desktop> result = hibernateCriteria.list();
         // lazy load referenced entities
         if(criteria.getImages() != null && criteria.getImages()) {
-            for(Desktop desktop: result) {
-                // typical lazy initialize
-                desktop.getImages().size();
-            }
+            // lazily load
+            result.forEach((desktop) -> { desktop.getImages(); desktop.getImages().size(); });
         }
         if(criteria.getRa() != null && criteria.getRa()) {
-            for(Desktop desktop: result) {
-                // typical lazy initialize
-                desktop.getTopAccessories().size();
-            }
+            result.forEach((desktop) -> { desktop.getTopAccessories(); desktop.getTopAccessories().size(); });
         }
         long total = (long) session.createCriteria(Desktop.class).setProjection(Projections.rowCount()).uniqueResult();
-        long totalPages = total/criteria.getLimit() + 1;
+
         SearchResultCursor cursor = new SearchResultCursor();
-        cursor.setLimit(criteria.getLimit());
+        long totalPages = 0;
+        // negative limit is interpreted as no limit
+        if(criteria.getLimit() < 0) {
+            totalPages = 1;
+        } else {
+            cursor.setLimit(criteria.getLimit());
+            totalPages = (long) Math.ceil((double) total / (double) criteria.getLimit());
+        }
         cursor.setOffset(offset);
         cursor.setTotalCount(total);
         cursor.setTotalPages(totalPages);

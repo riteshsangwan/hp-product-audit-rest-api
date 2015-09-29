@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import java.io.Serializable;
 
@@ -31,10 +29,6 @@ public class ProductImage implements Serializable {
 
     private String productNumber;
 
-    @ManyToOne
-    @JoinColumn(name="productNumber", referencedColumnName = "productNumber", insertable = false, updatable = false)
-    private Product product;
-
     public String getProductNumber() {
         return productNumber;
     }
@@ -49,14 +43,6 @@ public class ProductImage implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     @Override

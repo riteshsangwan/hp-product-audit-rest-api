@@ -61,6 +61,16 @@ public abstract class AbstractProduct implements Serializable {
 
     private String hpDataSheet;
 
+    private Integer rating;
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
     public String getCurrency() {
         return currency;
     }

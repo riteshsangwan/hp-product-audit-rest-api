@@ -22,15 +22,11 @@ import java.util.Collection;
 public class Tablet extends AbstractProduct {
     private String operatingSystem;
 
-    private String processor;
-
     private String display;
 
     private String memory;
 
     private String internalStorage;
-
-    private String wireless;
 
     private String battery;
 
@@ -44,8 +40,6 @@ public class Tablet extends AbstractProduct {
 
     private String audio;
 
-    private String sensors;
-
     private String color;
 
     private String integratedCamera;
@@ -57,6 +51,12 @@ public class Tablet extends AbstractProduct {
     private Long dimensionDepthInInches;
 
     private Long dimensionHeightInInches;
+
+    private String processor;
+
+    private String sensors;
+
+    private String wireless;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productNumber")
     private Collection<RelatedAccessory> topAccessories;

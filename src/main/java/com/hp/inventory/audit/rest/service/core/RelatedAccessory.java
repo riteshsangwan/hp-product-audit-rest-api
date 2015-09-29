@@ -8,11 +8,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import java.io.Serializable;
 
@@ -38,10 +35,6 @@ public class RelatedAccessory implements Serializable {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="productNumber", insertable = false, updatable = false)
-    private Product product;
-
     public String getName() {
         return name;
     }
@@ -64,14 +57,6 @@ public class RelatedAccessory implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     @Override

@@ -44,6 +44,6 @@ public class SearchCriteriaValueFactory extends AbstractContainerRequestValueFac
     @Override
     public SearchCriteria provide() throws ApiException {
         MultivaluedMap<String, String> queryParams = info.getQueryParameters();
-        return utilities.parseSearchCriteria(queryParams, false);
+        return utilities.parseSearchCriteria(queryParams);
     }
 }

@@ -17,26 +17,26 @@ public class SearchResultCursor {
     /**
      * Represents the limit
      */
-    private int limit;
+    private Integer limit;
     /**
      * Represents the offset
      */
-    private int offset;
+    private Integer offset;
     /**
      * Represents the total number of records
      */
-    private long totalCount;
+    private Long totalCount;
     /**
      * Represents the total pages
      */
-    private long totalPages;
+    private Long totalPages;
 
 
     /**
      * Gets the limit
      * @return the limit
      */
-    public int getLimit() {
+    public Integer getLimit() {
         return limit;
     }
 
@@ -44,7 +44,7 @@ public class SearchResultCursor {
      * Sets the limit
      * @param limit the value to set
      */
-    public void setLimit(int limit) {
+    public void setLimit(Integer limit) {
         this.limit = limit;
     }
 
@@ -52,7 +52,7 @@ public class SearchResultCursor {
      * Gets the offset
      * @return the offset
      */
-    public int getOffset() {
+    public Integer getOffset() {
         return offset;
     }
 
@@ -60,7 +60,7 @@ public class SearchResultCursor {
      * Sets the offset
      * @param offset the value to set
      */
-    public void setOffset(int offset) {
+    public void setOffset(Integer offset) {
         this.offset = offset;
     }
 
@@ -68,7 +68,7 @@ public class SearchResultCursor {
      * Gets the total count
      * @return the total count
      */
-    public long getTotalCount() {
+    public Long getTotalCount() {
         return totalCount;
     }
 
@@ -76,7 +76,7 @@ public class SearchResultCursor {
      * Sets the total count
      * @param totalCount the value to set
      */
-    public void setTotalCount(long totalCount) {
+    public void setTotalCount(Long totalCount) {
         this.totalCount = totalCount;
     }
 
@@ -84,7 +84,7 @@ public class SearchResultCursor {
      * Gets the total pages
      * @return the total pages
      */
-    public long getTotalPages() {
+    public Long getTotalPages() {
         return totalPages;
     }
 
@@ -92,7 +92,7 @@ public class SearchResultCursor {
      * Sets the total pages
      * @param totalPages the value to set
      */
-    public void setTotalPages(long totalPages) {
+    public void setTotalPages(Long totalPages) {
         this.totalPages = totalPages;
     }
 }

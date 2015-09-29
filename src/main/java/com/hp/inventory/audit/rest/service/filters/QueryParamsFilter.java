@@ -61,7 +61,7 @@ public class QueryParamsFilter implements ContainerRequestFilter {
                 if(!sortColumn.startsWith("+") && !sortColumn.startsWith("-")) {
                     throw new IllegalArgumentException("Sort Order can only be '+' or '-'. For eg: To sort by productNumber ascending use +productNumber");
                 } else if(validSortColumns.indexOf(sortValue) == -1) {
-                    throw new IllegalArgumentException(sortValue + " is not a valid sort criteria");
+                    throw new IllegalArgumentException(sortValue + " is not a valid sort criteria. Valid values are " + Arrays.toString(validSortColumns.toArray()));
                 }
             }
         }

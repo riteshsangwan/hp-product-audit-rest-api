@@ -60,6 +60,9 @@ public class Pagination extends Sorting {
         if(StringUtils.isNotBlank(offset)) {
             try {
                 this.offset = Integer.parseInt(offset);
+                if(this.offset < 0) {
+                    throw new IllegalArgumentException("Offset should be greater than 0");
+                }
             } catch(NumberFormatException nfe) {
                 throw new IllegalArgumentException(offset + " value is invalid. Offset can only be an integer value");
             }

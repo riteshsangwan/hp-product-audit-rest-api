@@ -53,7 +53,7 @@ public class Products {
     @ExceptionMetered
     @QueryParams(fields = {"productNumber", "version", "auditTimeStamp", "id", "productName", "productUrl", "sourceFile", "productType",
         "currentPrice", "currency", "strikedPrice", "dateAdded", "previousPrice", "dateOfPriceChange", "rating", "previousRating",
-        "numberOfReviews", "dateOfRatingChange", "parsingError", "dateOfParsingError", "comingSoonDate", "availableForSaleDate"}, sortColumns = {"currentPrice", "productName", "rating"})
+        "numberOfReviews", "dateOfRatingChange", "parsingError", "dateOfParsingError", "comingSoonDate", "availableForSaleDate"}, sortColumns = {"currentPrice", "productName", "rating", "productNumber", "auditTimeStamp"})
     public ApiResponse getProducts(@ProductSearchCriteriaParam ProductSearchCriteria criteria) throws ApiException {
         ServiceResult<Product> result = service.getProducts(criteria);
         return ApiResponse.buildWithPayload(new Payload<Product>().addObjectsToList(result.getResults()).setCursor(result.getCursor())).setStatus(Response.Status.OK);

@@ -22,13 +22,13 @@ public class ProductSearchCriteria extends SearchCriteria {
      */
     private List<String> productType;
     /**
-     * Represents the mininum value of auditTimestamp
+     * Represents the mininum value of auditTimeStamp
      */
-    private Date minAuditTimestamp;
+    private Date minAuditTimeStamp;
     /**
-     * Represents the maxinum value of auditTimestamp
+     * Represents the maxinum value of auditTimeStamp
      */
-    private Date maxAuditTimestamp;
+    private Date maxAuditTimeStamp;
     /**
      * Represents the the mininum value of dateAdded
      */
@@ -105,47 +105,47 @@ public class ProductSearchCriteria extends SearchCriteria {
     }
 
     /**
-     * Gets the minAuditTimestamp
-     * @return the minAuditTimestamp
+     * Gets the minAuditTimeStamp
+     * @return the minAuditTimeStamp
      */
-    public Date getMinAuditTimestamp() {
-        return minAuditTimestamp;
+    public Date getMinAuditTimeStamp() {
+        return minAuditTimeStamp;
     }
 
     /**
-     * Sets the minAuditTimestamp
-     * @param minAuditTimestamp the value to set to minAuditTimestamp
+     * Sets the minAuditTimeStamp
+     * @param minAuditTimeStamp the value to set to minAuditTimeStamp
      */
-    public void setMinAuditTimestamp(String minAuditTimestamp) {
-        if(StringUtils.isNotBlank(minAuditTimestamp)) {
+    public void setMinAuditTimeStamp(String minAuditTimeStamp) {
+        if(StringUtils.isNotBlank(minAuditTimeStamp)) {
             try {
-                long millis = Long.parseLong(minAuditTimestamp);
-                this.minAuditTimestamp = new Date(millis);
+                long millis = Long.parseLong(minAuditTimeStamp);
+                this.minAuditTimeStamp = new Date(millis);
             } catch(NumberFormatException nfe) {
-                throw new IllegalArgumentException("minAuditTimestamp should be a valid date", nfe);
+                throw new IllegalArgumentException("minAuditTimeStamp should be a valid date", nfe);
             }
         }
     }
 
     /**
-     * Gets the maxAuditTimestamp
-     * @return the maxAuditTimestamp
+     * Gets the maxAuditTimeStamp
+     * @return the maxAuditTimeStamp
      */
-    public Date getMaxAuditTimestamp() {
-        return maxAuditTimestamp;
+    public Date getMaxAuditTimeStamp() {
+        return maxAuditTimeStamp;
     }
 
     /**
-     * Sets the maxAuditTimestamp
-     * @param maxAuditTimestamp the value to set to maxAuditTimestamp
+     * Sets the maxAuditTimeStamp
+     * @param maxAuditTimeStamp the value to set to maxAuditTimeStamp
      */
-    public void setMaxAuditTimestamp(String maxAuditTimestamp) {
-        if(StringUtils.isNotBlank(maxAuditTimestamp)) {
+    public void setMaxAuditTimeStamp(String maxAuditTimeStamp) {
+        if(StringUtils.isNotBlank(maxAuditTimeStamp)) {
             try {
-                long millis = Long.parseLong(maxAuditTimestamp);
-                this.maxAuditTimestamp = new Date(millis);
+                long millis = Long.parseLong(maxAuditTimeStamp);
+                this.maxAuditTimeStamp = new Date(millis);
             } catch(NumberFormatException nfe) {
-                throw new IllegalArgumentException("maxAuditTimestamp should be a valid date", nfe);
+                throw new IllegalArgumentException("maxAuditTimeStamp should be a valid date", nfe);
             }
         }
     }

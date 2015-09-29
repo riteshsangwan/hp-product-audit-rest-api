@@ -76,11 +76,11 @@ public class ProductDAO extends AbstractDAO<Product> {
             }
         }
         // audit timestamp
-        if(criteria.getMinAuditTimestamp() != null) {
-            hibernateCriteria = hibernateCriteria.add(Restrictions.ge("auditTimestamp", criteria.getMinAuditTimestamp()));
+        if(criteria.getMinAuditTimeStamp() != null) {
+            hibernateCriteria = hibernateCriteria.add(Restrictions.ge("auditTimeStamp", criteria.getMinAuditTimeStamp()));
         }
-        if(criteria.getMaxAuditTimestamp() != null) {
-            hibernateCriteria = hibernateCriteria.add(Restrictions.le("auditTimestamp", criteria.getMaxAuditTimestamp()));
+        if(criteria.getMaxAuditTimeStamp() != null) {
+            hibernateCriteria = hibernateCriteria.add(Restrictions.le("auditTimeStamp", criteria.getMaxAuditTimeStamp()));
         }
 
         // date added
@@ -168,26 +168,28 @@ public class ProductDAO extends AbstractDAO<Product> {
 
         // lazy load referenced entities
         if(criteria.getImages() != null && criteria.getImages()) {
-            for(Product product: result) {
-                // typical lazy initialize
-                product.getImages().size();
-            }
+            result.forEach((product) -> { product.getImages(); product.getImages().size(); });
         }
         if(criteria.getRa() != null && criteria.getRa()) {
-            for(Product product: result) {
-                // typical lazy initialize
-                product.getTopAccessories().size();
-            }
+            result.forEach((product) -> { product.getTopAccessories(); product.getTopAccessories().size(); });
         }
 
         // pagination
         long total = (long) session.createCriteria(Product.class).setProjection(Projections.rowCount()).uniqueResult();
-        long totalPages = total/criteria.getLimit() + 1;
+
         SearchResultCursor cursor = new SearchResultCursor();
-        cursor.setLimit(criteria.getLimit());
+        long totalPages = 0;
+        // negative limit is interpreted as no limit
+        if(criteria.getLimit() < 0) {
+            totalPages = 1;
+        } else {
+            cursor.setLimit(criteria.getLimit());
+            totalPages = (long) Math.ceil((double) total / (double) criteria.getLimit());
+        }
         cursor.setOffset(offset);
         cursor.setTotalCount(total);
         cursor.setTotalPages(totalPages);
+
         session.close();
         return new ServiceResult<Product>(result, cursor);
     }
